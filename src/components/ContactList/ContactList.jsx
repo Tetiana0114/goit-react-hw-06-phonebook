@@ -1,26 +1,44 @@
-import PropTypes from 'prop-types';
-import ContactListElement from 'components/ContactListElement';
+import { useDispatch, useSelector } from 'react-redux';
+import { FiUser } from "react-icons/fi";
+import { deleteContact } from 'redux/contactsSlice';
 import css from './ContactList.module.css'
 
-const ContactList = ({ contacts, onClick }) => {
+const ContactList = () => {
+    const dispatch = useDispatch();
+    const contacts = useSelector(state => state.contacts);
+    const searchContact = useSelector(state => state.filter.filter).toLowerCase().trim();
+
+    const onDelete = (id) => {
+        dispatch(deleteContact(id));
+    };
+
+    const onFilteredNames = () => {
+        return contacts.filter(contact =>
+        contact.name.toLowerCase().includes(searchContact)
+        )
+    };
+    
+    const foundedContacts = onFilteredNames();
+
     return (
-        <ul className={css.list}>{contacts.map(contact => (
-            <ContactListElement
-            key={contact.id}
-            name={contact.name}
-            number={contact.number}
-            onClick={() => onClick(contact.id)}
-            />
+       <ul className={css.list}>
+            {foundedContacts.map(contact => (
+            <li className={css.list_item} key={contact.id}>
+                <p className={css.list_name}>
+                        <FiUser size={20} className={css.icon} />
+                        {contact.name}: <span className={css.list_number}>{contact.number}</span>
+                </p>
+                <button
+                    type="button"
+                    onClick={onDelete}
+                    className={css.list_btn}
+                >
+                Delete
+                </button>
+            </li>
             ))}
         </ul>
     );
 }
-
-ContactList.propTypes = {
-    contacts: PropTypes.arrayOf(PropTypes.shape({
-        id:PropTypes.string.isRequired,
-    }))
-    
-  };
 
 export default ContactList;

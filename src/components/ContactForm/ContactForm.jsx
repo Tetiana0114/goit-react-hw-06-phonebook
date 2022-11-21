@@ -9,7 +9,7 @@ const ContactForm = () => {
   const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
-  function handleSubmit(event){
+  const handleSubmit= (event) => {
     event.preventDefault();
     const field = event.target;
     const name = field.name.value;
