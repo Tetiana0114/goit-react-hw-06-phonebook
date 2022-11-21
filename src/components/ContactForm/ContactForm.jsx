@@ -9,7 +9,7 @@ const ContactForm = () => {
   const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
-  const handleSubmit= (event) => {
+  const onFormSubmit= (event) => {
     event.preventDefault();
     const field = event.target;
     const name = field.name.value;
@@ -24,7 +24,7 @@ const ContactForm = () => {
   };
 
 return ( 
-<form onSubmit={handleSubmit}>
+<form onSubmit={onFormSubmit}>
         <label className={css.label}>Name:
          <input className={css.input}
       type="text"
