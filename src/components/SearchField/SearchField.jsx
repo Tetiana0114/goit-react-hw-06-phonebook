@@ -1,20 +1,22 @@
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import css from './SearchField.module.css'
 import { FaSearch } from "react-icons/fa";
+import { setContactsFilter } from '../../redux/filterSlice';
 
-const SearchField = ({ onChange }) => {
+const SearchField = () => {
+    const dispatch = useDispatch();
+
+    const handleFilter = event => {
+    dispatch(setContactsFilter(event.target.value.toLowerCase()));
+};
     return (
     <label className={css.label}><FaSearch size={20} className={css.icon}/> Find contacts by the name:
         <input className={css.input}
         type="text" 
         name="filter" 
-        onChange={onChange} />
+        onChange={handleFilter} />
     </label>
         );
     }
-
-SearchField.propTypes = {
-    onChange: PropTypes.func.isRequired,
-};
 
 export default SearchField;
