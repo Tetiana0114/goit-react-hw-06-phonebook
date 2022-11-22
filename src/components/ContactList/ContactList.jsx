@@ -2,27 +2,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FiUser } from "react-icons/fi";
 import { deleteContact } from 'redux/contactsSlice';
 import css from './ContactList.module.css'
+import { getContacts, getFilter } from 'redux/selectors';
 
 const ContactList = () => {
     const dispatch = useDispatch();
-    const contacts = useSelector(state => state.contacts);
-    const searchContact = useSelector(state => state.filter.filter).toLowerCase().trim();
+    const contacts = useSelector(getContacts);
+    const searchName = useSelector(getFilter).toLowerCase().trim();
 
-    const onDelete = (id) => {
+    const onDelete = e => {
+        const id = e.target.id;
         dispatch(deleteContact(id));
     };
 
-    const onFilteredNames = () => {
+    const onFilteredNames = (contacts, searchName) => {
         return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(searchContact)
+        contact.name.toLowerCase().includes(searchName)
         )
     };
     
-    const foundedContacts = onFilteredNames();
+    const foundContacts = onFilteredNames(contacts, searchName);
 
     return (
        <ul className={css.list}>
-            {foundedContacts.map(contact => (
+            {foundContacts.map(contact => (
             <li className={css.list_item} key={contact.id}>
                 <p className={css.list_name}>
                         <FiUser size={20} className={css.icon} />
@@ -32,6 +34,7 @@ const ContactList = () => {
                     type="button"
                     onClick={onDelete}
                     className={css.list_btn}
+                    id={contact.id}
                 >
                 Delete
                 </button>

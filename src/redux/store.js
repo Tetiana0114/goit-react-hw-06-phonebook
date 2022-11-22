@@ -11,12 +11,12 @@ import {
   REGISTER,
 } from 'redux-persist';
 import { combineReducers } from "redux";
-import { filtersReducer } from './filterSlice';
+import { filterReducer } from './filterSlice';
 import { contactsReducer } from './contactsSlice';
 
 export const rootReducer = combineReducers({
   contacts: contactsReducer,
-  filter: filtersReducer,
+  filter: filterReducer,
 });
 
 const persistConfig = {

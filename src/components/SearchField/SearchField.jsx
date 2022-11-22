@@ -6,15 +6,16 @@ import { setContactsFilter } from '../../redux/filterSlice';
 const SearchField = () => {
     const dispatch = useDispatch();
 
-    const handleFilter = event => {
-    dispatch(setContactsFilter(event.target.value.toLowerCase()));
+    const onContactsFilter = e => {
+    const filter = e.target.value.toLowerCase();
+    dispatch(setContactsFilter(filter));
 };
     return (
     <label className={css.label}><FaSearch size={20} className={css.icon}/> Find contacts by the name:
         <input className={css.input}
         type="text" 
         name="filter" 
-        onChange={handleFilter} />
+        onChange={onContactsFilter} />
     </label>
         );
     }

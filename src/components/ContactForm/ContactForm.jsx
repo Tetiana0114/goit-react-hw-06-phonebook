@@ -1,26 +1,32 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { BsPhoneFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import css from './ContactForm.module.css'
 import { addContact } from '../../redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
 
 const ContactForm = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  const onFormSubmit= (event) => {
-    event.preventDefault();
-    const field = event.target;
+  const onFormSubmit= e => {
+    e.preventDefault();
+    const field = e.target;
     const name = field.name.value;
     const number = field.number.value;
-    if (contacts.find(
+
+    const foundContact = contacts.find(
       contact => contact.name.toLowerCase().trim() === name.toLowerCase().trim()
-    )) {
-      return window.alert(`${name} is already in contacts !`);
+    );
+
+    if (!foundContact) {
+      dispatch(addContact(name, number));
+      field.reset();
+    } else {
+      Notify.info(`${name} is already in contacts !`);
     }
-    dispatch(addContact(name, number));
-    field.reset();
   };
 
 return ( 
