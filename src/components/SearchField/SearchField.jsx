@@ -14,7 +14,8 @@ const SearchField = () => {
     <label className={css.label}><FaSearch size={20} className={css.icon}/> Find contacts by the name:
         <input className={css.input}
         type="text" 
-        name="filter" 
+        name="filter"
+        placeholder="Enter name..."
         onChange={onContactsFilter} />
     </label>
         );

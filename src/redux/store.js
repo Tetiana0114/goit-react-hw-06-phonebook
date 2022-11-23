@@ -10,14 +10,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { combineReducers } from "redux";
-import { filterReducer } from './filterSlice';
-import { contactsReducer } from './contactsSlice';
-
-export const rootReducer = combineReducers({
-  contacts: contactsReducer,
-  filter: filterReducer,
-});
+import { rootReducer } from './reducer';
 
 const persistConfig = {
   whitelist: ['contacts'],
